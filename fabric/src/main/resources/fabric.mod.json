@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "no_render",
+  "version": "${version}",
+  "name": "no_render",
+  "description": "Render only the things you want.",
+  "authors": [],
+  "contact": {},
+  "license": "All Rights Reserved",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {},
+  "mixins": [
+    "no_render.mixins.json",
+    "no_render-common.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.17",
+    "minecraft": ">=1.19.2",
+    "com_electronwill_night-config_core": "*",
+    "com_electronwill_night-config_toml": "*"
+  }
+}
