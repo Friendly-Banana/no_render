@@ -9,7 +9,9 @@
   "license": "All Rights Reserved",
   "icon": "icon.png",
   "environment": "*",
-  "entrypoints": {},
+  "entrypoints": {
+    "main": ["me.banana.no_render.fabric.NoRenderFabric"]
+  },
   "mixins": [
     "no_render.mixins.json",
     "no_render-common.mixins.json"

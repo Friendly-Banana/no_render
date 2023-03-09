@@ -22,7 +22,7 @@ dependencies {
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 
-    shadowCommon("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}") { transitive false }
+    include implementation("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}")
 
     include implementation("com.electronwill.night-config:core:${rootProject.night_config_version}")
     include implementation("com.electronwill.night-config:toml:${rootProject.night_config_version}")
