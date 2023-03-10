@@ -29,6 +29,8 @@ dependencies {
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive false }
 
     shadowCommon("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}") { transitive false }
+    implementation("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}")
+    annotationProcessor("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}")
     forgeRuntimeLibrary("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}")
 }
 
