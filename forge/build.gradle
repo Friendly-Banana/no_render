@@ -40,6 +40,8 @@ processResources {
     }
 }
 
+version = "${project.mod_version}+${project.minecraft_version}+forge"
+
 shadowJar {
     exclude "fabric.mod.json"
 

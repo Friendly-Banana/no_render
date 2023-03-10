@@ -21,7 +21,7 @@ modId = "no_render" #mandatory
 # see the associated build.gradle script for how to populate this completely automatically during a build
 version = "${version}" #mandatory
 # A display name for the mod
-displayName = "no_render" #mandatory
+displayName = "NoRender" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification <here>
 #updateJSONURL="http://myurl.me/" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
@@ -55,7 +55,7 @@ versionRange = "[43,)" #mandatory
 # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
 ordering = "NONE"
 # Side this dependency is applied on - BOTH, CLIENT or SERVER
-side = "BOTH"
+side = "CLIENT"
 # Here's another dependency
 [[dependencies.no_render]]
 modId = "minecraft"

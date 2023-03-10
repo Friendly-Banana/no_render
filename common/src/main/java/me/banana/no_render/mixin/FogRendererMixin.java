@@ -15,7 +15,7 @@ public class FogRendererMixin {
     public static void setupNoFog() {
     }
 
-    @Inject(method = "setupFog(Lnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/FogRenderer$FogMode;FZF)V", at = @At(value = "HEAD"), cancellable = true, remap = false)
+    @Inject(method = "setupFog(Lnet/minecraft/client/Camera;Lnet/minecraft/client/renderer/FogRenderer$FogMode;FZF)V", at = @At(value = "HEAD"), cancellable = true)
     private static void hideFog(Camera camera, FogRenderer.FogMode fogMode, float viewDistance, boolean thickFog, float partialTicks, CallbackInfo ci) {
         if (NoRenderConfig.CONFIG.hideTerrainFog.get() && fogMode == FogRenderer.FogMode.FOG_TERRAIN) {
             setupNoFog();
