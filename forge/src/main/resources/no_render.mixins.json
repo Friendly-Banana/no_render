@@ -3,6 +3,7 @@
   "minVersion": "0.8",
   "package": "me.banana.no_render.mixin.forge",
   "compatibilityLevel": "JAVA_17",
+  "refmap": "no_render.refmap.json",
   "mixins": [
   ],
   "client": [
