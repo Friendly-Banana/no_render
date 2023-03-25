@@ -27,7 +27,7 @@ dependencies {
 
     include implementation("com.electronwill.night-config:core:${rootProject.night_config_version}")
     include implementation("com.electronwill.night-config:toml:${rootProject.night_config_version}")
-    include modImplementation("curse.maven:forgeconfigfabric-547434:${rootProject.forgeconfigfabric_file_id}")
+    modImplementation "net.minecraftforge:forgeconfigapiport-fabric:${rootProject.forgeconfigfabric_version}"
 }
 
 version = "${project.mod_version}-${project.minecraft_version}+fabric"
