@@ -1,6 +1,6 @@
 package me.banana.no_render;
 
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ambient.AmbientCreature;
@@ -41,9 +41,9 @@ public class NoRenderConfig {
     public final ForgeConfigSpec.BooleanValue hideTerrainFog;
     public final ForgeConfigSpec.BooleanValue hideParticles;
 
-    public static final Predicate<Object> ENTITY_ID_PREDICATE = o -> o instanceof String entity && Registry.ENTITY_TYPE.containsKey(new ResourceLocation(entity));
+    public static final Predicate<Object> ENTITY_ID_PREDICATE = o -> o instanceof String entity && BuiltInRegistries.ENTITY_TYPE.containsKey(new ResourceLocation(entity));
     public static final Predicate<Entity> HIDE_ENTITY_PREDICATE = entity -> !CONFIG.hiddenEntityIds.get()
-        .contains(Registry.ENTITY_TYPE.getKey(entity.getType()).toString()) && hiddenTypes.stream()
+        .contains(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).toString()) && hiddenTypes.stream()
         .noneMatch(type -> type.isInstance(entity));
 
     NoRenderConfig(ForgeConfigSpec.Builder builder) {
