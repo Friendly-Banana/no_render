@@ -6,9 +6,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Matrix4f;
 import me.banana.no_render.NoRenderConfig;
 import net.minecraft.client.Camera;
-import net.minecraft.client.particle.ParticleEngine;
-import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.culling.Frustum;
+import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.lighting.LevelLightEngine;
@@ -33,7 +32,7 @@ public class LevelRendererMixin {
             return Collections.emptyList();
         }
         return StreamSupport.stream(entitiesForRendering.spliterator(), true)
-            .filter(entity -> NoRenderConfig.hiddenTypes.stream().noneMatch(type -> type.isInstance(entity)))
+            .filter(NoRenderConfig.HIDE_ENTITY_PREDICATE)
             .toList();
     }
 

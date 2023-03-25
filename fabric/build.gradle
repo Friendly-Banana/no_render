@@ -30,7 +30,7 @@ dependencies {
     include modImplementation("curse.maven:forgeconfigfabric-547434:${rootProject.forgeconfigfabric_file_id}")
 }
 
-version = "${project.mod_version}+${project.minecraft_version}+fabric"
+version = "${project.mod_version}-${project.minecraft_version}+fabric"
 
 processResources {
     filesMatching("fabric.mod.json") {
