@@ -28,7 +28,7 @@ dependencies {
 
     include implementation("com.electronwill.night-config:core:${rootProject.night_config_version}")
     include implementation("com.electronwill.night-config:toml:${rootProject.night_config_version}")
-    modImplementation "net.minecraftforge:forgeconfigapiport-fabric:${rootProject.forgeconfigfabric_version}"
+    include modImplementation("net.minecraftforge:forgeconfigapiport-fabric:${rootProject.forgeconfigfabric_version}")
 }
 
 processResources {
