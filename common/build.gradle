@@ -16,8 +16,6 @@ dependencies {
     implementation("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}")
     annotationProcessor("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}")
 
-    implementation "com.electronwill.night-config:core:${rootProject.night_config_version}"
-    implementation "com.electronwill.night-config:toml:${rootProject.night_config_version}"
     modImplementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${rootProject.forgeconfigfabric_version}"
 }
 

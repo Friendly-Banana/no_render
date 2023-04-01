@@ -26,9 +26,7 @@ dependencies {
     include implementation("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}")
     annotationProcessor("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}")
 
-    include implementation("com.electronwill.night-config:core:${rootProject.night_config_version}")
-    include implementation("com.electronwill.night-config:toml:${rootProject.night_config_version}")
-    include modImplementation("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${rootProject.forgeconfigfabric_version}")
+    modImplementation("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${rootProject.forgeconfigfabric_version}")
 }
 
 processResources {
@@ -97,7 +95,7 @@ unifiedPublishing {
         gameLoaders = ["fabric", "quilt"]
         mainPublication renameJarForPublication
         relations {
-            includes {
+            depends {
                 curseforge = "forge-config-api-port-fabric"
                 modrinth = "forge-config-api-port"
             }

@@ -66,7 +66,7 @@ public class NoRenderConfig {
         hideBlocks = builder.define("hideBlocks", false);
         builder.comment("very specific things like the rotating entity in spawners");
         hideBlockEntities = builder.define("hideBlockEntities", false);
-        builder.comment("BEs that render offscreen like beacon beams and structure block position marker");
+        builder.comment("BEs that render even when the block is offscreen, e.g. beacon beams and structure block position marker");
         hideGlobalBlockEntities = builder.define("hideGlobalBlockEntities", false);
         hideSky = builder.define("hideSky", false);
         hideTerrainFog = builder.define("hideTerrainFog", false);
