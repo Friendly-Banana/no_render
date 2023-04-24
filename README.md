@@ -8,6 +8,8 @@ Don't like seeing other players? Don't render them.
 
 ## Features
 
+Configure them with the config file in .minecraft/config.
+
 ### General
 
 - skip Light Updates (ever wanted to live in darkness?)
