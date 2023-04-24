@@ -1,6 +1,6 @@
 # No Render
 
-A Minecraft Forge mod to toggle rendering of various things
+A Minecraft mod to toggle rendering of various things
 
 Too many cows? Your game lags? Stop it, use No Render.<br>
 Too many items? Simply don't render them and save your FPS.<br>
