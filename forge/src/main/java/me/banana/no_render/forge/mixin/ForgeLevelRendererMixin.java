@@ -1,6 +1,6 @@
 package me.banana.no_render.forge.mixin;
 
-import com.llamalad7.mixinextras.injector.WrapWithCondition;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.mojang.blaze3d.vertex.PoseStack;
 import me.banana.no_render.NoRenderConfig;
 import net.minecraft.client.Camera;

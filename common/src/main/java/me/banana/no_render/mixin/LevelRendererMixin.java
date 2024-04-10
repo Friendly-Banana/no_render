@@ -1,7 +1,7 @@
 package me.banana.no_render.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.llamalad7.mixinextras.injector.WrapWithCondition;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.mojang.blaze3d.vertex.PoseStack;
 import me.banana.no_render.NoRenderConfig;
 import net.minecraft.client.Camera;
@@ -21,8 +21,8 @@ import java.util.stream.StreamSupport;
 
 @Mixin(LevelRenderer.class)
 public class LevelRendererMixin {
-    @WrapWithCondition(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/lighting/LevelLightEngine;runUpdates(IZZ)I"))
-    private boolean skipLightUpdates(LevelLightEngine lightEngine, int i, boolean skylight, boolean skipEdgeLightPropagation) {
+    @WrapWithCondition(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/lighting/LevelLightEngine;runLightUpdates()I"))
+    private boolean skipLightUpdates(LevelLightEngine instance) {
         return !NoRenderConfig.CONFIG.skipLightUpdates.get();
     }
 
@@ -36,12 +36,12 @@ public class LevelRendererMixin {
             .toList();
     }
 
-    @WrapWithCondition(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;renderChunkLayer(Lnet/minecraft/client/renderer/RenderType;Lcom/mojang/blaze3d/vertex/PoseStack;DDDLorg/joml/Matrix4f;)V"))
+    @WrapWithCondition(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;renderSectionLayer(Lnet/minecraft/client/renderer/RenderType;Lcom/mojang/blaze3d/vertex/PoseStack;DDDLorg/joml/Matrix4f;)V"))
     private boolean hideBlocks(LevelRenderer levelRenderer, RenderType renderType, PoseStack poseStack, double cameraX, double cameraY, double cameraZ, Matrix4f positionMatrix) {
         return !NoRenderConfig.CONFIG.hideBlocks.get();
     }
 
-    @ModifyExpressionValue(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/chunk/ChunkRenderDispatcher$CompiledChunk;getRenderableBlockEntities()Ljava/util/List;"))
+    @ModifyExpressionValue(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher$CompiledSection;getRenderableBlockEntities()Ljava/util/List;"))
     private List<BlockEntity> hideBlockEntities(List<BlockEntity> blockEntities) {
         return NoRenderConfig.CONFIG.hideBlockEntities.get() ? Collections.emptyList() : blockEntities;
     }

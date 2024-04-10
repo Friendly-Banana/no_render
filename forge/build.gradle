@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "com.github.johnrengelman.shadow" version "8.1.1"
     id "me.shedaniel.unified-publishing"
 }
 
@@ -9,7 +9,12 @@ architectury {
 }
 
 loom {
+    accessWidenerPath = project(":common").loom.accessWidenerPath
+
     forge {
+        convertAccessWideners = true
+        extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
+
         mixinConfig "no_render-common.mixins.json"
         mixinConfig "no_render.mixins.json"
     }
@@ -17,7 +22,7 @@ loom {
 
 configurations {
     common
-    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
+    shadowCommon // Don't use shadow from the shadow plugin since it *excludes* files.
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentForge.extendsFrom common
@@ -29,10 +34,8 @@ dependencies {
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive false }
 
-    shadowCommon("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}") { transitive false }
-    implementation("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}")
-    annotationProcessor("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}")
-    forgeRuntimeLibrary("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}")
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${rootProject.mixin_extras_version}"))
+    implementation(include("io.github.llamalad7:mixinextras-forge:${rootProject.mixin_extras_version}")) { transitive false }
 }
 
 processResources {
@@ -43,30 +46,15 @@ processResources {
 
 shadowJar {
     exclude "fabric.mod.json"
+    exclude "architectury.common.json"
 
     configurations = [project.configurations.shadowCommon]
-    classifier "dev-shadow"
+    archiveClassifier = "dev-shadow"
 }
 
 remapJar {
     input.set shadowJar.archiveFile
     dependsOn shadowJar
-    classifier null
-}
-
-tasks.register('renameJarForPublication', Zip) {
-    dependsOn remapJar
-    from remapJar.archiveFile.map { zipTree(it) }
-    extension "jar"
-    metadataCharset "UTF-8"
-    destinationDirectory = base.libsDirectory
-    classifier project.name
-}
-
-assemble.dependsOn renameJarForPublication
-
-jar {
-    classifier "dev"
 }
 
 sourcesJar {
@@ -102,7 +90,7 @@ unifiedPublishing {
         releaseType = "$rootProject.artifact_type"
         gameVersions = [project.minecraft_version]
         gameLoaders = ["forge"]
-        mainPublication renameJarForPublication
+        mainPublication tasks.remapJar
 
         var CURSE_API_KEY = project.findProperty("CURSE_API_KEY") ?: System.getenv("CURSE_API_KEY")
         if (CURSE_API_KEY != null) {

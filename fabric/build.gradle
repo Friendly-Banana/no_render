@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "com.github.johnrengelman.shadow" version "8.1.1"
     id "me.shedaniel.unified-publishing"
 }
 
@@ -8,9 +8,13 @@ architectury {
     fabric()
 }
 
+loom {
+    accessWidenerPath = project(":common").loom.accessWidenerPath
+}
+
 configurations {
     common
-    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
+    shadowCommon // Don't use shadow from the shadow plugin since it *excludes* files.
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentFabric.extendsFrom common
@@ -23,9 +27,6 @@ dependencies {
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 
-    include implementation("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}")
-    annotationProcessor("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}")
-
     modImplementation("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${rootProject.forgeconfigfabric_version}")
 }
 
@@ -36,29 +37,16 @@ processResources {
 }
 
 shadowJar {
+    exclude "architectury.common.json"
+
     configurations = [project.configurations.shadowCommon]
-    classifier "dev-shadow"
+    archiveClassifier = "dev-shadow"
 }
 
 remapJar {
+    injectAccessWidener = true
     input.set shadowJar.archiveFile
     dependsOn shadowJar
-    classifier null
-}
-
-tasks.register('renameJarForPublication', Zip) {
-    dependsOn remapJar
-    from remapJar.archiveFile.map { zipTree(it) }
-    extension "jar"
-    metadataCharset "UTF-8"
-    destinationDirectory = base.libsDirectory
-    classifier project.name
-}
-
-assemble.dependsOn renameJarForPublication
-
-jar {
-    classifier "dev"
 }
 
 sourcesJar {
@@ -93,7 +81,7 @@ unifiedPublishing {
         releaseType = "$rootProject.artifact_type"
         gameVersions = [project.minecraft_version]
         gameLoaders = ["fabric", "quilt"]
-        mainPublication renameJarForPublication
+        mainPublication tasks.remapJar
         relations {
             depends {
                 curseforge = "forge-config-api-port-fabric"

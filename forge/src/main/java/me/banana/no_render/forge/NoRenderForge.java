@@ -1,5 +1,6 @@
 package me.banana.no_render.forge;
 
+import com.llamalad7.mixinextras.MixinExtrasBootstrap;
 import me.banana.no_render.NoRender;
 import me.banana.no_render.NoRenderConfig;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -13,7 +14,7 @@ import static me.banana.no_render.NoRender.MOD_ID;
 @Mod(MOD_ID)
 public class NoRenderForge {
     public NoRenderForge() {
-        NoRender.init();
+        MixinExtrasBootstrap.init();
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, NoRenderConfig.GENERAL_SPEC);
         FMLJavaModLoadingContext.get()
             .getModEventBus()

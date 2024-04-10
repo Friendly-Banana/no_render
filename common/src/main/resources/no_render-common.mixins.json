@@ -6,7 +6,8 @@
   "mixins": [
   ],
   "client": [
-    "FogRendererMixin","LevelRendererMixin"
+    "FogRendererMixin",
+    "LevelRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

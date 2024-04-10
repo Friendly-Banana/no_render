@@ -2,19 +2,14 @@ architectury {
     common(rootProject.enabled_platforms.split(","))
 }
 
-dependencies {
-    // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
-    // Do NOT use other classes from fabric loader
-    modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
+loom {
+    accessWidenerPath = file("src/main/resources/no_render.accesswidener")
 }
 
 dependencies {
     // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
     // Do NOT use other classes from fabric loader
     modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
-
-    implementation("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}")
-    annotationProcessor("com.github.LlamaLad7:MixinExtras:${rootProject.mixin_extras_version}")
 
     modImplementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${rootProject.forgeconfigfabric_version}"
 }

@@ -12,7 +12,6 @@ import static me.banana.no_render.NoRender.MOD_ID;
 public class NoRenderFabric implements ModInitializer {
     @Override
     public void onInitialize() {
-        NoRender.init();
         ForgeConfigRegistry.INSTANCE.register(MOD_ID, ModConfig.Type.CLIENT, NoRenderConfig.GENERAL_SPEC);
         ModConfigEvents.reloading(MOD_ID).register(NoRender::checkConfigReload);
     }
