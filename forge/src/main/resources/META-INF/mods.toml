@@ -1,7 +1,7 @@
 # The name of the mod loader type to load - for regular FML @Mod mods it should be javafml
 modLoader = "javafml" #mandatory
 # A version range to match for said mod loader - for regular FML @Mod it will be the forge version
-loaderVersion = "[49,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+loaderVersion = "[47,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
 license = "${license}"
 issueTrackerURL = "${issue_url}"
 # A list of mods - how many allowed here is determined by the individual mod loader
@@ -31,7 +31,7 @@ description = "${description}"
 modId = "forge"
 # Does this dependency have to exist - if not, ordering below must be specified
 mandatory = true
-versionRange = "[49,)"
+versionRange = "[47,)"
 # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
 ordering = "NONE"
 # Side this dependency is applied on - BOTH, CLIENT or SERVER
