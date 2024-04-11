@@ -8,6 +8,9 @@ Don't like seeing other players? Don't render them.
 
 ## Features
 
+Install [Config Screens](https://www.curseforge.com/minecraft/mc-mods/config-menus-forge) for in-game config or edit the
+config file at `.minecraft/config`.
+
 ### General
 
 - skip Light Updates (ever wanted to live in darkness?)
