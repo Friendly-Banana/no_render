@@ -1,8 +1,7 @@
 package me.banana.no_render.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.llamalad7.mixinextras.injector.WrapWithCondition;
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import me.banana.no_render.NoRenderConfig;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -36,12 +35,12 @@ public class LevelRendererMixin {
             .toList();
     }
 
-    @WrapWithCondition(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;renderChunkLayer(Lnet/minecraft/client/renderer/RenderType;Lcom/mojang/blaze3d/vertex/PoseStack;DDDLorg/joml/Matrix4f;)V"))
-    private boolean hideBlocks(LevelRenderer levelRenderer, RenderType renderType, PoseStack poseStack, double cameraX, double cameraY, double cameraZ, Matrix4f positionMatrix) {
+    @WrapWithCondition(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;renderSectionLayer(Lnet/minecraft/client/renderer/RenderType;DDDLorg/joml/Matrix4f;Lorg/joml/Matrix4f;)V"))
+    private boolean hideBlocks(LevelRenderer instance, RenderType renderType, double d, double e, double f, Matrix4f matrix4f, Matrix4f matrix4f2) {
         return !NoRenderConfig.CONFIG.hideBlocks.get();
     }
 
-    @ModifyExpressionValue(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/chunk/ChunkRenderDispatcher$CompiledChunk;getRenderableBlockEntities()Ljava/util/List;"))
+    @ModifyExpressionValue(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/chunk/SectionRenderDispatcher$CompiledSection;getRenderableBlockEntities()Ljava/util/List;"))
     private List<BlockEntity> hideBlockEntities(List<BlockEntity> blockEntities) {
         return NoRenderConfig.CONFIG.hideBlockEntities.get() ? Collections.emptyList() : blockEntities;
     }
@@ -51,8 +50,8 @@ public class LevelRendererMixin {
         return NoRenderConfig.CONFIG.hideGlobalBlockEntities.get() ? Collections.emptySet() : globalBlockEntities;
     }
 
-    @WrapWithCondition(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;renderSky(Lcom/mojang/blaze3d/vertex/PoseStack;Lorg/joml/Matrix4f;FLnet/minecraft/client/Camera;ZLjava/lang/Runnable;)V"))
-    private boolean hideSky(LevelRenderer levelRenderer, PoseStack poseStack, Matrix4f projectionMatrix, float tickDelta, Camera camera, boolean bl, Runnable runnable) {
+    @WrapWithCondition(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/LevelRenderer;renderSky(Lorg/joml/Matrix4f;Lorg/joml/Matrix4f;FLnet/minecraft/client/Camera;ZLjava/lang/Runnable;)V"))
+    private boolean hideSky(LevelRenderer instance, Matrix4f matrix4f, Matrix4f matrix4f2, float f, Camera camera, boolean bl, Runnable runnable) {
         return !NoRenderConfig.CONFIG.hideSky.get();
     }
 }

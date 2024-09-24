@@ -5,9 +5,12 @@
   "name": "${display_name}",
   "description": "${description}",
   "authors": ["${authors}"],
-  "contact": {},
+  "contact": {
+    "homepage": "${homepage}",
+    "issues": "${issue_url}"
+  },
   "license": "${license}",
-  "icon": "icon.png",
+  "icon": "assets/no_render/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": ["me.banana.no_render.fabric.NoRenderFabric"]
