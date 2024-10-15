@@ -12,7 +12,7 @@ import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Collections;
@@ -22,31 +22,31 @@ import java.util.function.Predicate;
 
 public class NoRenderConfig {
     public static NoRenderConfig CONFIG;
-    public static ForgeConfigSpec GENERAL_SPEC;
+    public static ModConfigSpec CONFIG_SPEC;
 
     public static final HashSet<Class<? extends Entity>> hiddenTypes = new HashSet<>();
-    public final ForgeConfigSpec.BooleanValue hideAllEntities;
-    public final ForgeConfigSpec.BooleanValue hideItems;
-    public final ForgeConfigSpec.BooleanValue hideItemframes;
-    public final ForgeConfigSpec.BooleanValue hidePassiveMobs;
-    public final ForgeConfigSpec.BooleanValue hideVillager;
-    public final ForgeConfigSpec.BooleanValue hidePlayer;
-    public final ForgeConfigSpec.ConfigValue<List<? extends String>> hiddenEntityIds;
+    public final ModConfigSpec.BooleanValue hideAllEntities;
+    public final ModConfigSpec.BooleanValue hideItems;
+    public final ModConfigSpec.BooleanValue hideItemframes;
+    public final ModConfigSpec.BooleanValue hidePassiveMobs;
+    public final ModConfigSpec.BooleanValue hideVillager;
+    public final ModConfigSpec.BooleanValue hidePlayer;
+    public final ModConfigSpec.ConfigValue<List<? extends String>> hiddenEntityIds;
 
-    public final ForgeConfigSpec.BooleanValue skipLightUpdates;
-    public final ForgeConfigSpec.BooleanValue hideBlocks;
-    public final ForgeConfigSpec.BooleanValue hideBlockEntities;
-    public final ForgeConfigSpec.BooleanValue hideGlobalBlockEntities;
-    public final ForgeConfigSpec.BooleanValue hideSky;
-    public final ForgeConfigSpec.BooleanValue hideTerrainFog;
-    public final ForgeConfigSpec.BooleanValue hideParticles;
+    public final ModConfigSpec.BooleanValue skipLightUpdates;
+    public final ModConfigSpec.BooleanValue hideBlocks;
+    public final ModConfigSpec.BooleanValue hideBlockEntities;
+    public final ModConfigSpec.BooleanValue hideGlobalBlockEntities;
+    public final ModConfigSpec.BooleanValue hideSky;
+    public final ModConfigSpec.BooleanValue hideTerrainFog;
+    public final ModConfigSpec.BooleanValue hideParticles;
 
-    public static final Predicate<Object> ENTITY_ID_PREDICATE = o -> o instanceof String entity && BuiltInRegistries.ENTITY_TYPE.containsKey(new ResourceLocation(entity));
+    public static final Predicate<Object> ENTITY_ID_PREDICATE = o -> o instanceof String entity && BuiltInRegistries.ENTITY_TYPE.containsKey(ResourceLocation.parse(entity));
     public static final Predicate<Entity> HIDE_ENTITY_PREDICATE = entity -> !CONFIG.hiddenEntityIds.get()
         .contains(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).toString()) && hiddenTypes.stream()
         .noneMatch(type -> type.isInstance(entity));
 
-    NoRenderConfig(ForgeConfigSpec.Builder builder) {
+    NoRenderConfig(ModConfigSpec.Builder builder) {
         builder.push("General");
         skipLightUpdates = builder.define("skipLightUpdates", false);
         builder.pop();
@@ -59,7 +59,7 @@ public class NoRenderConfig {
         hideVillager = builder.define("hideVillager", false);
         hidePlayer = builder.define("hidePlayer", false);
         builder.comment("A list of entity ids to also hide. Entries in the list have the same format as in commands: namespace:id. The default namespace is minecraft.");
-        hiddenEntityIds = builder.defineListAllowEmpty(List.of("hiddenEntityIds"), Collections::emptyList, ENTITY_ID_PREDICATE);
+        hiddenEntityIds = builder.defineListAllowEmpty("hiddenEntityIds", Collections::emptyList, () -> "minecraft:", ENTITY_ID_PREDICATE);
         builder.pop();
 
         builder.push("World");
@@ -74,7 +74,7 @@ public class NoRenderConfig {
         builder.pop();
     }
 
-    void onConfigReload() {
+    public void onConfigReload() {
         // update hidden entity types
         hiddenTypes.clear();
         if (hideItems.get()) {
@@ -99,8 +99,8 @@ public class NoRenderConfig {
     }
 
     static {
-        Pair<NoRenderConfig, ForgeConfigSpec> pair = new ForgeConfigSpec.Builder().configure(NoRenderConfig::new);
+        Pair<NoRenderConfig, ModConfigSpec> pair = new ModConfigSpec.Builder().configure(NoRenderConfig::new);
         CONFIG = pair.getLeft();
-        GENERAL_SPEC = pair.getRight();
+        CONFIG_SPEC = pair.getRight();
     }
 }

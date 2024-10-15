@@ -20,8 +20,10 @@
     "no_render-common.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=${loader_version}",
+    "fabricloader": ">=${fabric_loader_version}",
     "minecraft": ">=${minecraft_version}",
-    "forgeconfigapiport": ">=${forgeconfigfabric_version}"
+    "java": ">=21",
+    "fabric-api": "*",
+    "forgeconfigapiport": ">=${forgeconfigapiport_version}"
   }
 }
