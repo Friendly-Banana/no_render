@@ -42,9 +42,9 @@ public class NoRenderConfig {
     public final ModConfigSpec.BooleanValue hideParticles;
 
     public static final Predicate<Object> ENTITY_ID_PREDICATE = o -> o instanceof String entity && BuiltInRegistries.ENTITY_TYPE.containsKey(ResourceLocation.parse(entity));
-    public static final Predicate<Entity> HIDE_ENTITY_PREDICATE = entity -> !CONFIG.hiddenEntityIds.get()
-        .contains(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).toString()) && hiddenTypes.stream()
-        .noneMatch(type -> type.isInstance(entity));
+    public static final Predicate<Entity> HIDE_ENTITY_PREDICATE = entity -> CONFIG.hiddenEntityIds.get()
+        .contains(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).toString()) || hiddenTypes.stream()
+        .anyMatch(type -> type.isInstance(entity));
 
     NoRenderConfig(ModConfigSpec.Builder builder) {
         builder.push("General");
@@ -58,7 +58,7 @@ public class NoRenderConfig {
         hidePassiveMobs = builder.define("hidePassiveMobs", false);
         hideVillager = builder.define("hideVillager", false);
         hidePlayer = builder.define("hidePlayer", false);
-        builder.comment("A list of entity ids to also hide. Entries in the list have the same format as in commands: namespace:id. The default namespace is minecraft.");
+        builder.comment("A list of entity ids to also hide.You can use /summon to get the id, e.g. [\"minecraft:creeper\"] hides creepers");
         hiddenEntityIds = builder.defineListAllowEmpty("hiddenEntityIds", Collections::emptyList, () -> "minecraft:", ENTITY_ID_PREDICATE);
         builder.pop();
 

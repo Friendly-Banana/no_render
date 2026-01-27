@@ -31,7 +31,7 @@ public class LevelRendererMixin {
             return Collections.emptyList();
         }
         return StreamSupport.stream(entitiesForRendering.spliterator(), true)
-            .filter(NoRenderConfig.HIDE_ENTITY_PREDICATE)
+            .filter(NoRenderConfig.HIDE_ENTITY_PREDICATE.negate())
             .toList();
     }
 
