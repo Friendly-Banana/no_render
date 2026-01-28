@@ -47,10 +47,6 @@ public class NoRenderConfig {
         .anyMatch(type -> type.isInstance(entity));
 
     NoRenderConfig(ModConfigSpec.Builder builder) {
-        builder.push("General");
-        skipLightUpdates = builder.define("skipLightUpdates", false);
-        builder.pop();
-
         builder.push("Entities");
         hideAllEntities = builder.define("hideAllEntities", false);
         hideItems = builder.define("hideItems", false);
@@ -63,6 +59,7 @@ public class NoRenderConfig {
         builder.pop();
 
         builder.push("World");
+        skipLightUpdates = builder.define("skipLightUpdates", false);
         hideBlocks = builder.define("hideBlocks", false);
         builder.comment("very specific things like the rotating entity in spawners");
         hideBlockEntities = builder.define("hideBlockEntities", false);

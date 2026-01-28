@@ -1,0 +1,18 @@
+{
+  "no_render.configuration.hideParticles": "Hide particles",
+  "no_render.configuration.hideAllEntities": "Hide all entities",
+  "no_render.configuration.skipLightUpdates": "Skip light updates",
+  "no_render.configuration.World": "World",
+  "no_render.configuration.hideBlockEntities": "Hide block entities",
+  "no_render.configuration.hideTerrainFog": "Hide terrain fog",
+  "no_render.configuration.hiddenEntityIds": "Hide these entity IDs",
+  "no_render.configuration.hideItems": "Hide items",
+  "no_render.configuration.hideItemframes": "Hide item frames",
+  "no_render.configuration.hideVillager": "Hide villagers",
+  "no_render.configuration.hideBlocks": "Hide blocks",
+  "no_render.configuration.hidePassiveMobs": "Hide passive mobs",
+  "no_render.configuration.Entities": "Entities",
+  "no_render.configuration.hideGlobalBlockEntities": "Hide global block entities",
+  "no_render.configuration.hidePlayer": "Hide players",
+  "no_render.configuration.hideSky": "Hide the sky"
+}
