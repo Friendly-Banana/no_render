@@ -54,7 +54,7 @@ public class NoRenderConfig {
         hidePassiveMobs = builder.define("hidePassiveMobs", false);
         hideVillager = builder.define("hideVillager", false);
         hidePlayer = builder.define("hidePlayer", false);
-        builder.comment("A list of entity ids to also hide.You can use /summon to get the id, e.g. [\"minecraft:creeper\"] hides creepers");
+        builder.comment("A list of entity ids to also hide. You can use /summon or F3 to get the id, e.g. [\"minecraft:creeper\"] hides creepers");
         hiddenEntityIds = builder.defineListAllowEmpty("hiddenEntityIds", Collections::emptyList, () -> "minecraft:", ENTITY_ID_PREDICATE);
         builder.pop();
 

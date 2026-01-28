@@ -1,10 +1,14 @@
 plugins {
-    id 'com.github.johnrengelman.shadow'
+    id 'com.gradleup.shadow'
 }
 
 architectury {
     platformSetupLoomIde()
     fabric()
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/no_render.accesswidener")
 }
 
 configurations {

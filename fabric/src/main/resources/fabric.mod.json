@@ -13,12 +13,14 @@
   "icon": "assets/no_render/icon.png",
   "environment": "*",
   "entrypoints": {
-    "main": ["me.banana.no_render.fabric.NoRenderFabric"]
+    "main": ["me.banana.no_render.fabric.NoRenderFabric"],
+    "modmenu": ["me.banana.no_render.fabric.NoRenderFabricClient"]
   },
   "mixins": [
     "no_render.mixins.json",
     "no_render-common.mixins.json"
   ],
+  "accessWidener": "no_render.accesswidener",
   "depends": {
     "fabricloader": ">=${fabric_loader_version}",
     "minecraft": ">=${minecraft_version}",
