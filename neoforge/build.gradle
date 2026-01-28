@@ -1,5 +1,6 @@
 plugins {
     id 'com.gradleup.shadow'
+    id "me.shedaniel.unified-publishing"
 }
 
 architectury {
@@ -34,10 +35,10 @@ repositories {
 dependencies {
     neoForge "net.neoforged:neoforge:$rootProject.neoforge_version"
 
+    api "fuzs.forgeconfigapiport:forgeconfigapiport-neoforge:$rootProject.forgeconfigapiport_version"
+
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')
-
-    api "fuzs.forgeconfigapiport:forgeconfigapiport-neoforge:$rootProject.forgeconfigapiport_version"
 }
 
 processResources {
@@ -53,4 +54,32 @@ shadowJar {
 
 remapJar {
     input.set shadowJar.archiveFile
+}
+
+unifiedPublishing {
+    project {
+        displayName = "${project.archives_name}-${project.mod_version}-${project.minecraft_version}+forge"
+        gameVersions = [project.minecraft_version]
+        gameLoaders = ["neoforge"]
+
+        mainPublication tasks.remapJar // Declares the publicated jar
+
+        var CURSE_API_KEY = project.findProperty("CURSE_API_KEY") ?: System.getenv("CURSE_API_KEY")
+        if (CURSE_API_KEY != null) {
+            curseforge {
+                token = CURSE_API_KEY
+                id = rootProject.curseforge_id
+                gameVersions.addAll "Java 21"
+            }
+        }
+
+        var MODRINTH_TOKEN = project.findProperty("MODRINTH_TOKEN") ?: System.getenv("MODRINTH_TOKEN")
+        if (MODRINTH_TOKEN != null) {
+            modrinth {
+                token = MODRINTH_TOKEN
+                id = rootProject.modrinth_id
+                version = "${project.mod_version}-${project.minecraft_version}+forge"
+            }
+        }
+    }
 }
